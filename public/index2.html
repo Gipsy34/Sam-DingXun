@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%- title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <style>
+        *{
+            /* 初始化 */
+            margin: 0;
+            padding: 0;
+        }
+        html,
+        body,
+        #app {
+            height: 100%;
+        }
+        .loading-box{
+            width: 100%;
+            min-height: 100vh;
+            /* 弹性布局 水平+垂直居中 */
+            display: flex;
+            align-items: center;
+            background-color: #06252e;
+            -webkit-loading-box-reflect:below 1px linear-gradient(transparent, rgba(0,0,0,0.2));
+        }
+        .loading-box h1{
+            color: #fff;
+            font-size: 96px;
+            /* 字间距 */
+            letter-spacing: 15px;
+            /* 转大写 */
+            text-transform: uppercase;
+            /*text-align: center;*/
+            margin-left: 600px;
+            line-height: 76px;
+            outline: none;
+            /* 自定义属性 --c,可通过 var 函数对其调用 */
+            --c:lightseagreen;
+            /* 调用自定义属性--c，设置文字阴影（发光效果） */
+            text-shadow: 0 0 10px var(--c),
+            0 0 20px var(--c),
+            0 0 40px var(--c),
+            0 0 80px var(--c),
+            0 0 160px var(--c);
+            /* 执行动画：动画名 时长 线性的 无限次播放 */
+            animation: animate 5s linear infinite;
+        }
+        /* 定义动画 */
+        @keyframes animate{
+            to{
+                /* 色相旋转过滤镜（设置度数可改变颜色） */
+                filter: hue-rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body theme="theme2">
+<div id="app" >
+    <div class="loading-box">
+        <h1 id="title" contenteditable="true">努力加载中</h1>
+    </div>
+</div>
+<script>
+    change(1)
+    function change(c) {
+        if(!document.getElementById('title')){
+            return;
+        }
+        var content = '努力加载中';
+        if(c === 6){
+            c=1;
+        }
+        for (let i = 0; i < c; i++) {
+            content+='.';
+        }
+        document.getElementById('title').innerText= content
+        setTimeout(function () {
+            change(c+1)
+        },200);
+    }
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
