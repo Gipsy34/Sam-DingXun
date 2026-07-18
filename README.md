@@ -1,0 +1,1 @@
+This project is an MVP (Minimum Viable Prototype) that only implements the core CRUD functions for game data. The following features are reserved for future expansion and not developed for now: chart statistics, data export, multi-user permission management, etc.
