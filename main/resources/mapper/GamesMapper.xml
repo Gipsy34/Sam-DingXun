@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Game Library映射文件 -->
+<mapper namespace="com.codeying.mapper.GamesMapper">
+
+
+    <!--查询-->
+    <select id="sqlSelectList" resultType="com.codeying.entity.Games">
+        select * from tb_Games t
+        <where>
+            <if test="vo!=null and vo.name != null and vo.name != ''">
+                t.name like CONCAT('%',#{ vo.name },'%');
+            </if>
+        </where>
+    </select>
+
+    <delete id="sqlDelete">
+        delete from tb_Games where id = #{id}
+    </delete>
+    
+    <update id="sqlUpdate">
+        update tb_Games
+        set id=#{id}  ,name=#{name}  ,youxjj=#{youxjj}  ,company=#{company}  ,hots=#{hots}  ,fabsj=#{fabsj} 
+        where id= #{id}
+    </update>
+
+    <insert id="sqlSave">
+        insert into tb_Games values(
+        #{id}, ,#{name}  ,#{youxjj}  ,#{company}  ,#{hots}  ,#{fabsj} 
+        )
+    </insert>
+
+</mapper>
+

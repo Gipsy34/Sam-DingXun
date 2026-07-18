@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 公告映射文件 -->
+<mapper namespace="com.codeying.mapper.NoticeMapper">
+
+
+    <!--查询-->
+    <select id="sqlSelectList" resultType="com.codeying.entity.Notice">
+        select * from tb_Notice t
+        <where>
+            <if test="vo!=null and vo.title != null and vo.title != ''">
+                t.title like CONCAT('%',#{ vo.title },'%');
+            </if>
+        </where>
+    </select>
+
+    <delete id="sqlDelete">
+        delete from tb_Notice where id = #{id}
+    </delete>
+    
+    <update id="sqlUpdate">
+        update tb_Notice
+        set id=#{id}  ,title=#{title}  ,content=#{content}  ,createtime=#{createtime} 
+        where id= #{id}
+    </update>
+
+    <insert id="sqlSave">
+        insert into tb_Notice values(
+        #{id}, ,#{title}  ,#{content}  ,#{createtime} 
+        )
+    </insert>
+
+</mapper>
+

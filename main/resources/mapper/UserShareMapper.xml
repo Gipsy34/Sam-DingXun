@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 开源社区映射文件 -->
+<mapper namespace="com.codeying.mapper.UserShareMapper">
+
+    <!--查询Favorite最多的前几个-->
+    <select id="topN" resultType="com.codeying.entity.UserShare">
+        select w.*,count(s.id) as starCount
+        from tb_userShare w left JOIN tb_star s on w.id = s.itemid and itemtype='userShare'
+        group by w.id order by starCount desc, publishtime desc
+    </select>
+
+    <!--查询-->
+    <select id="sqlSelectList" resultType="com.codeying.entity.UserShare">
+        select * from tb_UserShare t
+        <where>
+            <if test="vo!=null and vo.showtitle != null and vo.showtitle != ''">
+                t.showtitle like CONCAT('%',#{ vo.showtitle },'%');
+            </if>
+            <if test="vo!=null and vo.youx != null and vo.youx != ''">
+                t.youx like CONCAT('%',#{ vo.youx },'%');
+            </if>
+            <if test="vo!=null and vo.fabr != null and vo.fabr != ''">
+                t.fabr like CONCAT('%',#{ vo.fabr },'%');
+            </if>
+        </where>
+    </select>
+
+    <delete id="sqlDelete">
+        delete from tb_UserShare where id = #{id}
+    </delete>
+    
+    <update id="sqlUpdate">
+        update tb_UserShare
+        set id=#{id}  ,showpic=#{showpic}  ,showtitle=#{showtitle}  ,youx=#{youx}  ,fabr=#{fabr}  ,showdesc=#{showdesc}  ,showdetail=#{showdetail}  ,publishtime=#{publishtime}  ,vv=#{vv} 
+        where id= #{id}
+    </update>
+
+    <insert id="sqlSave">
+        insert into tb_UserShare values(
+        #{id}, ,#{showpic}  ,#{showtitle}  ,#{youx}  ,#{fabr}  ,#{showdesc}  ,#{showdetail}  ,#{publishtime}  ,#{vv} 
+        )
+    </insert>
+
+</mapper>
+

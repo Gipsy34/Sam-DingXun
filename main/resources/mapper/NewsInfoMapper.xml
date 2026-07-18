@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 游戏热点映射文件 -->
+<mapper namespace="com.codeying.mapper.NewsInfoMapper">
+
+    <!--查询Favorite最多的前几个-->
+    <select id="topN" resultType="com.codeying.entity.NewsInfo">
+        select w.*,count(s.id) as starCount
+        from tb_newsInfo w left JOIN tb_star s on w.id = s.itemid and itemtype='newsInfo'
+        group by w.id order by starCount desc, publishtime desc
+    </select>
+
+    <!--查询-->
+    <select id="sqlSelectList" resultType="com.codeying.entity.NewsInfo">
+        select * from tb_NewsInfo t
+        <where>
+            <if test="vo!=null and vo.showtitle != null and vo.showtitle != ''">
+                t.showtitle like CONCAT('%',#{ vo.showtitle },'%');
+            </if>
+            <if test="vo!=null and vo.biaoq != null and vo.biaoq != ''">
+                t.biaoq like CONCAT('%',#{ vo.biaoq },'%');
+            </if>
+        </where>
+    </select>
+
+    <delete id="sqlDelete">
+        delete from tb_NewsInfo where id = #{id}
+    </delete>
+    
+    <update id="sqlUpdate">
+        update tb_NewsInfo
+        set id=#{id}  ,showpic=#{showpic}  ,showtitle=#{showtitle}  ,biaoq=#{biaoq}  ,showdesc=#{showdesc}  ,showdetail=#{showdetail}  ,publishtime=#{publishtime}  ,vv=#{vv} 
+        where id= #{id}
+    </update>
+
+    <insert id="sqlSave">
+        insert into tb_NewsInfo values(
+        #{id}, ,#{showpic}  ,#{showtitle}  ,#{biaoq}  ,#{showdesc}  ,#{showdetail}  ,#{publishtime}  ,#{vv} 
+        )
+    </insert>
+
+</mapper>
+

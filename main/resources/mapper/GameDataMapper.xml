@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 玩家动态映射文件 -->
+<mapper namespace="com.codeying.mapper.GameDataMapper">
+
+    <!--查询Favorite最多的前几个-->
+    <select id="topN" resultType="com.codeying.entity.GameData">
+        select w.*,count(s.id) as starCount
+        from tb_gameData w left JOIN tb_star s on w.id = s.itemid and itemtype='gameData'
+        group by w.id order by starCount desc, publishtime desc
+    </select>
+
+    <!--查询-->
+    <select id="sqlSelectList" resultType="com.codeying.entity.GameData">
+        select * from tb_GameData t
+        <where>
+            <if test="vo!=null and vo.showtitle != null and vo.showtitle != ''">
+                t.showtitle like CONCAT('%',#{ vo.showtitle },'%');
+            </if>
+            <if test="vo!=null and vo.gameid != null and vo.gameid != ''">
+                t.gameid like CONCAT('%',#{ vo.gameid },'%');
+            </if>
+            <if test="vo!=null and vo.yongh != null and vo.yongh != ''">
+                t.yongh like CONCAT('%',#{ vo.yongh },'%');
+            </if>
+            <if test="vo!=null and vo.biaoq != null and vo.biaoq != ''">
+                t.biaoq like CONCAT('%',#{ vo.biaoq },'%');
+            </if>
+        </where>
+    </select>
+
+    <delete id="sqlDelete">
+        delete from tb_GameData where id = #{id}
+    </delete>
+    
+    <update id="sqlUpdate">
+        update tb_GameData
+        set id=#{id}  ,showpic=#{showpic}  ,showtitle=#{showtitle}  ,gameid=#{gameid}  ,yongh=#{yongh}  ,biaoq=#{biaoq}  ,showdesc=#{showdesc}  ,showdetail=#{showdetail}  ,hours=#{hours}  ,publishtime=#{publishtime}  ,vv=#{vv} 
+        where id= #{id}
+    </update>
+
+    <insert id="sqlSave">
+        insert into tb_GameData values(
+        #{id}, ,#{showpic}  ,#{showtitle}  ,#{gameid}  ,#{yongh}  ,#{biaoq}  ,#{showdesc}  ,#{showdetail}  ,#{hours}  ,#{publishtime}  ,#{vv} 
+        )
+    </insert>
+
+</mapper>
+

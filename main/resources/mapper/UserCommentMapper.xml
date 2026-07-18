@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 评论映射文件 -->
+<mapper namespace="com.codeying.mapper.UserCommentMapper">
+
+
+    <!--查询-->
+    <select id="sqlSelectList" resultType="com.codeying.entity.UserComment">
+        select * from tb_UserComment t
+        <where>
+            <if test="vo!=null and vo.username != null and vo.username != ''">
+                t.username like CONCAT('%',#{ vo.username },'%');
+            </if>
+            <if test="vo!=null and vo.rolech != null and vo.rolech != ''">
+                t.rolech like CONCAT('%',#{ vo.rolech },'%');
+            </if>
+            <if test="vo!=null and vo.content != null and vo.content != ''">
+                t.content like CONCAT('%',#{ vo.content },'%');
+            </if>
+            <if test="vo!=null and vo.status != null and vo.status != ''">
+                t.status like CONCAT('%',#{ vo.status },'%');
+            </if>
+        </where>
+    </select>
+
+    <delete id="sqlDelete">
+        delete from tb_UserComment where id = #{id}
+    </delete>
+    
+    <update id="sqlUpdate">
+        update tb_UserComment
+        set id=#{id}  ,userid=#{userid}  ,username=#{username}  ,rolech=#{rolech}  ,content=#{content}  ,createtime=#{createtime}  ,ctid=#{ctid}  ,type=#{type}  ,status=#{status} 
+        where id= #{id}
+    </update>
+
+    <insert id="sqlSave">
+        insert into tb_UserComment values(
+        #{id}, ,#{userid}  ,#{username}  ,#{rolech}  ,#{content}  ,#{createtime}  ,#{ctid}  ,#{type}  ,#{status} 
+        )
+    </insert>
+
+</mapper>
+
